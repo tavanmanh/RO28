@@ -1,0 +1,35 @@
+DROP DATABASE IF EXISTS Assignment_2;
+create database Assignment_2;
+USE Assignment_2;
+
+DROP TABLE IF EXISTS `Trainee`;
+CREATE TABLE `Trainee`(
+	TraineeID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    Full_Name VARCHAR(100) NOT NULL,
+    Birth_Date DATE NOT NULL,
+    Gender ENUM('male', 'female',' unknown') NOT NULL UNIQUE KEY,
+    ET_IQ TINYINT UNSIGNED  NOT NULL,
+    ET_Gmath TINYINT UNSIGNED  NOT NULL,
+    ET_English TINYINT UNSIGNED  NOT NULL,
+    Training_Class INT UNSIGNED NOT NULL,
+    Evaluation_Notes VARCHAR(100) NOT NULL,
+    VTI_Account VARCHAR(100) NOT NULL UNIQUE KEY
+); 
+
+DROP TABLE IF EXISTS `Data`;
+CREATE TABLE `Data`(
+	ID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Code VARCHAR(5) NOT NULL,
+    ModifiedDate DATE NOT NULL
+);
+
+DROP TABLE IF EXISTS `Information`;
+CREATE TABLE `Information`(
+	ID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    BirthDate DATE NOT NULL,
+    Gender ENUM('0','1') UNIQUE KEY,
+    IsDeletedFlag BOOLEAN NOT NULL
+);
+
+
