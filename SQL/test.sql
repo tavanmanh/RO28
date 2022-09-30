@@ -23,7 +23,7 @@ CREATE TABLE `Account`(
     FullName VARCHAR(50) NOT NULL,
     DepartmentID TINYINT UNSIGNED  NOT NULL,
     PositionID TINYINT UNSIGNED  NOT NULL,
-    CreateDate DATE,
+    CreateDate DATE DEFAULT NOW(),
     FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID),
     FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
 );

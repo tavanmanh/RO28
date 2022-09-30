@@ -1,6 +1,6 @@
--- Xóa db nếu tồn tại
 DROP DATABASE IF EXISTS Tesing_System_Asigment_1;
-create database Tesing_System_Asigment_1;
+-- Xóa db nếu tồn tại
+CREATE DATABASE Tesing_System_Asigment_1;
 -- dùng db 
 USE Tesing_System_Asigment_1;
 DROP TABLE IF EXISTS `Department`;
@@ -18,12 +18,12 @@ CREATE TABLE `Position` (
 DROP TABLE IF EXISTS `Account`;
 CREATE TABLE `Account`(
 	AccountID INT PRIMARY KEY AUTO_INCREMENT,
-    Email VARCHAR(100) NOT NULL,
-    Username VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE KEY,
     FullName VARCHAR(50) NOT NULL,
     DepartmentID TINYINT UNSIGNED  NOT NULL,
     PositionID TINYINT UNSIGNED  NOT NULL,
-    CreateDate DATE,
+    CreateDate DATE DEFAULT '2001-11-09',
     FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID),
     FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
 );
@@ -31,16 +31,16 @@ CREATE TABLE `Account`(
 DROP TABLE IF EXISTS `Group`;
 CREATE TABLE `Group`(
 	GroupID INT PRIMARY KEY AUTO_INCREMENT,
-    GroupName VARCHAR(100) NOT NULL,
+    GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
-    CreateDate DATE
+    CreateDate DATE DEFAULT '2001-11-09'
 ); 
 
 DROP TABLE IF EXISTS `GroupAccount`;
 CREATE TABLE `GroupAccount`(
 	GroupID INT NOT NULL,
-    AccountID INT NOT NULL,
-    JoinDate DATE,
+    AccountID INT NOT NULL UNIQUE KEY,
+    JoinDate DATE DEFAULT '2001-11-09', 
 	FOREIGN KEY (GroupID) REFERENCES `Group`(GroupID),
     FOREIGN KEY(AccountID) REFERENCES `Account`(AccountID)
 ); 
@@ -54,7 +54,7 @@ CREATE TABLE `TypeQuestion`(
 DROP TABLE IF EXISTS `CategoryQuestion`;
 CREATE TABLE `CategoryQuestion`(
 	CategoryID INT PRIMARY KEY AUTO_INCREMENT,
-    CategoryName VARCHAR(100) NOT NULL
+    CategoryName VARCHAR(100) NOT NULL UNIQUE KEY
 ); 
 
 DROP TABLE IF EXISTS `Question`;
@@ -117,16 +117,16 @@ VALUES ('Dev'),
         ('PM');
 
 INSERT INTO `Account`(Email,Username,FullName,DepartmentID,PositionID,CreateDate)
-VALUES ('0@gmail.com', 'fleta_rutherford1', 'fleta_rutherford38', '1', '2', '2001-11-09'),
-		('1@gmail.com', 'fleta_rutherford2', 'fleta_rutherford38', '3', '1', '2002-11-09'),
-        ('2@gmail.com', 'fleta_rutherford3', 'fleta_rutherford38', '2', '1', '2003-11-09'),
-        ('3@gmail.com', 'fleta_rutherford4', 'fleta_rutherford38', '3', '2', '2004-11-09'),
-        ('4@gmail.com', 'fleta_rutherford5', 'fleta_rutherford38', '4', '2', '2005-11-09'),
-        ('5@gmail.com', 'fleta_rutherford6', 'fleta_rutherford38', '2', '3', '2006-11-09'),
-        ('6@gmail.com', 'fleta_rutherfor7', 'fleta_rutherford38', '3', '3', '2007-11-09'),
-        ('7@gmail.com', 'fleta_rutherfor8', 'fleta_rutherford38', '1', '1', '2008-11-09'),
-        ('8@gmail.com', 'fleta_rutherford9', 'fleta_rutherford38', '2', '2', '2009-11-09'),
-        ('9@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2010-11-09');
+VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'fleta_rutherford38', '1', '2','2001-11-09'),
+		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_rutherford38', '3', '1', '2002-11-09'),
+        ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_rutherford38', '2', '1', '2003-11-09'),
+        ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta_rutherford38', '3', '2', '2004-11-09'),
+        ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_rutherford38', '4', '2', '2005-11-09'),
+        ('dothiha@gmail.com', 'fleta_rutherford6', 'fleta_rutherford38', '2', '3', '2006-11-09'),
+        ('nongducmanh@gmail.com', 'fleta_rutherfor7', 'fleta_rutherford38', '3', '3', '2007-11-09'),
+        ('hahaiquang@gmail.com', 'fleta_rutherfor8', 'fleta_rutherford38', '1', '1', '2008-11-09'),
+        ('daothuqha@gmail.com', 'fleta_rutherford9', 'fleta_rutherford38', '2', '2', '2009-11-09'),
+        ('thicthichieu@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2010-11-09');
         
 INSERT INTO `Group`(GroupName,CreatorID,CreateDate)
 VALUES ('A', '10', '2001-11-09'),
@@ -164,8 +164,7 @@ VALUES ('ABC'),
         ('POA'),
         ('DKS');
         
-INSERT INTO `CategoryQuestion`(CategoryName)
-VALUES ('Dien thoai'), 
+INSERT INTO `CategoryQuestion`(CategoryName)VALUES ('Dien thoai'), 
 		('May tinh'), 
         ('Ti vi'),
         ('Tu lanh'),
