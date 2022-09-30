@@ -23,7 +23,7 @@ CREATE TABLE `Account`(
     FullName VARCHAR(50) NOT NULL,
     DepartmentID TINYINT UNSIGNED  NOT NULL,
     PositionID TINYINT UNSIGNED  NOT NULL,
-    CreateDate DATE DEFAULT '2001-11-09',
+    CreateDate DATETIME DEFAULT NOW(),
     FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID),
     FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
 );
@@ -33,14 +33,14 @@ CREATE TABLE `Group`(
 	GroupID INT PRIMARY KEY AUTO_INCREMENT,
     GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
-    CreateDate DATE DEFAULT '2001-11-09'
+    CreateDate DATETIME DEFAULT NOW()
 ); 
 
 DROP TABLE IF EXISTS `GroupAccount`;
 CREATE TABLE `GroupAccount`(
 	GroupID INT NOT NULL,
     AccountID INT NOT NULL UNIQUE KEY,
-    JoinDate DATE DEFAULT '2001-11-09', 
+    JoinDate DATETIME DEFAULT NOW(), 
 	FOREIGN KEY (GroupID) REFERENCES `Group`(GroupID),
     FOREIGN KEY(AccountID) REFERENCES `Account`(AccountID)
 ); 
@@ -64,7 +64,7 @@ CREATE TABLE `Question`(
     CategoryID INT NOT NULL,
     TypeID INT NOT NULL,
     CreatorID INT NOT NULL,
-    CreateDate DATE,
+    CreateDate DATETIME DEFAULT NOW(),
     FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID)
 ); 
 
