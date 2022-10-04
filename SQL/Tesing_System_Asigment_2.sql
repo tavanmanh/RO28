@@ -23,7 +23,7 @@ CREATE TABLE `Account`(
     FullName VARCHAR(50) NOT NULL,
     DepartmentID TINYINT UNSIGNED  NOT NULL,
     PositionID TINYINT UNSIGNED  NOT NULL,
-    CreateDate DATETIME DEFAULT NOW(),
+    CreateDate DATE,
     FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID),
     FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
 );
@@ -33,7 +33,7 @@ CREATE TABLE `Group`(
 	GroupID INT PRIMARY KEY AUTO_INCREMENT,
     GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
-    CreateDate DATETIME DEFAULT NOW()
+    CreateDate DATE
 ); 
 
 DROP TABLE IF EXISTS `GroupAccount`;
@@ -84,7 +84,7 @@ CREATE TABLE `Exam`(
     Title VARCHAR(100) NOT NULL,
     CategoryID INT NOT NULL,
     CreatorID INT NOT NULL,
-    CreateDate DATE,
+    CreateDate DATETIME DEFAULT NOW(),
     Duration INT NOT NULL,
     FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID)
 ); 
@@ -99,7 +99,7 @@ CREATE TABLE `ExamQuestion`(
 
 
 INSERT INTO `Department`(DepartmentName)
-VALUES ('Bảo vệ'), 
+VALUES ('Sale'), 
 		('Kế toán'), 
         ('Thuế'),
         ('IT'),
@@ -117,22 +117,22 @@ VALUES ('Dev'),
         ('PM');
 
 INSERT INTO `Account`(Email,Username,FullName,DepartmentID,PositionID,CreateDate)
-VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'fleta_rutherford38', '1', '2','2001-11-09'),
-		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_rutherford38', '3', '1', '2002-11-09'),
-        ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_rutherford38', '2', '1', '2003-11-09'),
-        ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta_rutherford38', '3', '2', '2004-11-09'),
-        ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_rutherford38', '4', '2', '2005-11-09'),
-        ('dothiha@gmail.com', 'fleta_rutherford6', 'fleta_rutherford38', '2', '3', '2006-11-09'),
-        ('nongducmanh@gmail.com', 'fleta_rutherfor7', 'fleta_rutherford38', '3', '3', '2007-11-09'),
-        ('hahaiquang@gmail.com', 'fleta_rutherfor8', 'fleta_rutherford38', '1', '1', '2008-11-09'),
-        ('daothuqha@gmail.com', 'fleta_rutherford9', 'fleta_rutherford38', '2', '2', '2009-11-09'),
+VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'Dfleta_ruther44443232ford38o', '1', '2','2001-11-09'),
+		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_ru43therford38', '3', '1', '2002-11-09'),
+        ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_r4utherford38', '2', '1', '2003-11-09'),
+        ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta444_rutherford38', '3', '2', '2004-11-09'),
+        ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_ruth4322erford38', '4', '2', '2005-11-09'),
+        ('dothiha@gmail.com', 'fleta_rutherford6', 'fleta_ru324therford38', '2', '3', '2006-11-09'),
+        ('nongducmanh@gmail.com', 'fleta_rutherfor7', 'fleta_r4321utherford38', '3', '3', '2007-11-09'),
+        ('hahaiquang@gmail.com', 'fleta_rutherfor8', 'fleta_ruth2134erford38', '1', '1', '2008-11-09'),
+        ('daothuqha@gmail.com', 'fleta_rutherford9', 'fleta_rut142herford38', '2', '2', '2009-11-09'),
         ('thicthichieu@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2010-11-09');
         
 INSERT INTO `Group`(GroupName,CreatorID,CreateDate)
-VALUES ('A', '10', '2001-11-09'),
+VALUES ('A', '10', '2020-11-09'),
 		('B', '1', '2002-11-09'),
         ('C', '2', '2003-11-09'),
-        ('D', '3', '2004-11-09'),
+        ('D', '3', '2019-12-19'),
         ('E', '4', '2005-11-09'),
         ('F', '5', '2006-11-09'),
         ('G', '6', '2007-11-09'),
@@ -176,9 +176,9 @@ INSERT INTO `CategoryQuestion`(CategoryName)VALUES ('Dien thoai'),
         ('Li oa');
 
 INSERT INTO `Question`(Content,CategoryID,TypeID,CreatorID,CreateDate)
-VALUES ('SDSFDFDSF', '1','1','1', '2001-11-09'),
+VALUES ('câu hỏiSDSFDFDSF', '1','1','1', '2001-11-09'),
 		('FDSFDSAFDSA', '2','1','3', '2002-11-09'),
-        ('FADSFDSF', '3','1','4', '2003-11-09'),
+        ('câu hỏi FADSFDSF', '3','1','4', '2003-11-09'),
         ('FDSAFDGFD', '1','1','5', '2004-11-09'),
         ('FDAGFVCXVC', '3','1','4', '2005-11-09'),
         ('GFDSGFDS', '4','1','3', '2006-11-09'),
@@ -191,9 +191,9 @@ INSERT INTO `Answer`(Content,QuestionID,isCorrect)
 VALUES ('SDSFDFDSF','1', '1'),
 		('FDSFDSAFDSA','3', '0'),
         ('FADSFDSF','4', '1'),
-        ('FDSAFDGFD','5', '0'),
+        ('FDSAFDGFD','1', '0'),
         ('FDAGFVCXVC','4', '0'),
-        ('GFDSGFDS','3', '1'),
+        ('GFDSGFDS','1', '1'),
         ('GFDSGVSAFDAS','2', '1'),
         ('HGFJHGFJFG','4', '1'),
         ('HETHSGF','1', '1'),
@@ -222,3 +222,4 @@ VALUES ('1', '1'),
         ('4', '1'),
         ('1', '5'),
         ('5', '1');
+SELECT CreateDate FROM `Group` where date(CreateDate) <'2019-12-20';
