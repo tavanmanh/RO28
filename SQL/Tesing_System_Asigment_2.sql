@@ -118,15 +118,15 @@ VALUES ('Dev'),
 
 INSERT INTO `Account`(Email,Username,FullName,DepartmentID,PositionID,CreateDate)
 VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'Dfleta_ruther44443232ford38o', '1', '2','2001-11-09'),
-		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_ru43therford38', '3', '1', '2002-11-09'),
+		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_ru43therford38', '1', '1', '2002-11-09'),
         ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_r4utherford38', '2', '1', '2003-11-09'),
         ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta444_rutherford38', '3', '2', '2004-11-09'),
-        ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_ruth4322erford38', '4', '2', '2005-11-09'),
+        ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_ruth4322erford38', '1', '2', '2005-11-09'),
         ('dothiha@gmail.com', 'fleta_rutherford6', 'fleta_ru324therford38', '2', '3', '2006-11-09'),
-        ('nongducmanh@gmail.com', 'fleta_rutherfor7', 'fleta_r4321utherford38', '3', '3', '2007-11-09'),
-        ('hahaiquang@gmail.com', 'fleta_rutherfor8', 'fleta_ruth2134erford38', '1', '1', '2008-11-09'),
+        ('nongducmanh@gmail.com', 'fleta_rutherfor7', 'fleta_r4321utherford38', '3', '4', '2007-11-09'),
+        ('hahaiquang@gmail.com', 'fleta_rutherfor8', 'fleta_ruth2134erford38', '1', '1', '2012-11-09'),
         ('daothuqha@gmail.com', 'fleta_rutherford9', 'fleta_rut142herford38', '2', '2', '2009-11-09'),
-        ('thicthichieu@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2010-11-09');
+        ('thicthichieu@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2011-11-09');
         
 INSERT INTO `Group`(GroupName,CreatorID,CreateDate)
 VALUES ('A', '10', '2020-11-09'),
@@ -191,12 +191,12 @@ INSERT INTO `Answer`(Content,QuestionID,isCorrect)
 VALUES ('SDSFDFDSF','1', '1'),
 		('FDSFDSAFDSA','3', '0'),
         ('FADSFDSF','4', '1'),
-        ('FDSAFDGFD','1', '0'),
-        ('FDAGFVCXVC','4', '0'),
+        ('FDSAFDGFD','3', '0'),
+        ('FDAGFVCXVC','3', '0'),
         ('GFDSGFDS','1', '1'),
         ('GFDSGVSAFDAS','2', '1'),
         ('HGFJHGFJFG','4', '1'),
-        ('HETHSGF','1', '1'),
+        ('HETHSGF','3', '1'),
         ('HGDFHGJHFJU','5', '1');
 
 INSERT INTO `Exam`(Code,Title,CategoryID,CreatorID,CreateDate,Duration)
@@ -215,11 +215,11 @@ INSERT INTO `ExamQuestion`(ExamID,QuestionID)
 VALUES ('1', '1'),
 		('3', '2'),
         ('4', '7'),
-        ('5', '10'),
+        ('5', '3'),
         ('4', '3'),
-        ('3', '1'),
-        ('2', '1'),
-        ('4', '1'),
+        ('3', '3'),
+        ('2', '3'),
+        ('4', '2'),
         ('1', '5'),
         ('5', '1');
-SELECT CreateDate FROM `Group` where date(CreateDate) <'2019-12-20';
+

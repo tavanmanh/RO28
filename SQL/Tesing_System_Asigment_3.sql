@@ -14,7 +14,7 @@ SELECT * FROM `Account` WHERE DepartmentID='3' ORDER BY LENGTH(FullName) DESC LI
 SELECT CreateDate FROM `Group` WHERE DATE(CreateDate) <'2019-12-20';
 
 -- CÂU 7
-SELECT `QuestionID` FROM Answer GROUP BY QuestionID HAVING COUNT(QuestionID) >= 4;
+SELECT QuestionID FROM Answer GROUP BY QuestionID HAVING COUNT(QuestionID) >= 4;
 
 -- CÂU 8
 SELECT ExamID FROM `Exam` WHERE DATE(CreateDate) <'2019-12-20' AND Duration >= 60;
