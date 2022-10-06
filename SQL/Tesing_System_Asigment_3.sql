@@ -10,6 +10,14 @@ SELECT * FROM `Account` ORDER BY LENGTH(FullName) desc limit 1;
 -- CÂU 5
 SELECT * FROM `Account` WHERE DepartmentID='3' ORDER BY LENGTH(FullName) DESC LIMIT 1;
 
+WITH CTE_DEP3 AS (
+	SELECT * FROM `Account` WHERE DepartmentID = 3
+)
+-- B2: Tìm trong kết quả đã lọc Account có tên dài nhất
+SELECT * FROM `CTE_DEP3`
+WHERE LENGTH(Fullname) = (SELECT MAX(LENGTH(Fullname)) FROM `CTE_DEP3`) 
+ORDER BY Fullname;
+
 -- CÂU 6
 SELECT CreateDate FROM `Group` WHERE DATE(CreateDate) <'2019-12-20';
 

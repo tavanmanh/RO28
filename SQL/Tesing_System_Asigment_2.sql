@@ -33,7 +33,8 @@ CREATE TABLE `Group`(
 	GroupID INT PRIMARY KEY AUTO_INCREMENT,
     GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
-    CreateDate DATE
+    CreateDate DATE,
+    FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID)
 ); 
 
 DROP TABLE IF EXISTS `GroupAccount`;
@@ -65,7 +66,8 @@ CREATE TABLE `Question`(
     TypeID INT NOT NULL,
     CreatorID INT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
-    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID)
+    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID),
+	FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID)
 ); 
 
 DROP TABLE IF EXISTS `Answer`;
@@ -100,7 +102,7 @@ CREATE TABLE `ExamQuestion`(
 
 INSERT INTO `Department`(DepartmentName)
 VALUES ('Sale'), 
-		('Kế toán'), 
+		('developer'), 
         ('Thuế'),
         ('IT'),
         ('Thiết Kế'),
@@ -117,8 +119,8 @@ VALUES ('Dev'),
         ('PM');
 
 INSERT INTO `Account`(Email,Username,FullName,DepartmentID,PositionID,CreateDate)
-VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'Dfleta_ruther44443232ford38o', '1', '2','2001-11-09'),
-		('hoangvanson@gmail.com', 'fleta_rutherford2', 'fleta_ru43therford38', '1', '1', '2002-11-09'),
+VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'NGYỄN VĂN A', '1', '2','2001-11-09'),
+		('hoangvanson@gmail.com', 'fleta_rutherford2', ' NGUYỄN VĂN fleta_ru43therford38', '1', '1', '2002-11-09'),
         ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_r4utherford38', '2', '1', '2003-11-09'),
         ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta444_rutherford38', '3', '2', '2004-11-09'),
         ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_ruth4322erford38', '1', '2', '2005-11-09'),
@@ -151,7 +153,7 @@ VALUES ('2', '1', '2001-11-09'),
         ('3', '8', '2008-11-09'),
         ('1', '9', '2009-11-09'),
         ('5', '10', '2010-11-09');
-        
+
 INSERT INTO `TypeQuestion`(TypeName)
 VALUES ('ABC'), 
 		('BCD'), 
