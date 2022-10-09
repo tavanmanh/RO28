@@ -23,9 +23,9 @@ CREATE TABLE `Account`(
     FullName VARCHAR(50) NOT NULL,
     DepartmentID TINYINT UNSIGNED  NOT NULL,
     PositionID TINYINT UNSIGNED  NOT NULL,
-    CreateDate DATE,
-    FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID),
-    FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID)
+    CreateDate DATETIME DEFAULT NOW(),
+    FOREIGN KEY (DepartmentID) REFERENCES `Department`(DepartmentID) ON UPDATE CASCADE,
+    FOREIGN KEY(PositionID) REFERENCES `Position`(PositionID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `Group`;
@@ -33,7 +33,7 @@ CREATE TABLE `Group`(
 	GroupID INT PRIMARY KEY AUTO_INCREMENT,
     GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
-    CreateDate DATE,
+    CreateDate DATETIME DEFAULT NOW(),
     FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID)
 ); 
 
@@ -66,8 +66,9 @@ CREATE TABLE `Question`(
     TypeID INT NOT NULL,
     CreatorID INT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
-    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID),
-	FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID)
+	FOREIGN KEY (TypeID) REFERENCES `TypeQuestion`(TypeID),
+    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID) ON DELETE CASCADE,
+	FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID) ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `Answer`;
@@ -110,7 +111,8 @@ VALUES ('Sale'),
         ('Maketing'),
         ('Dữ liệu'),
         ('Kiểm toán'),
-        ('Dịch vụ');
+        ('Dịch vụ'),
+        ('CHỜ VIỆC');
 
 INSERT INTO `Position`(PositionName)
 VALUES ('Dev'),	
@@ -131,16 +133,16 @@ VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'NGYỄN VĂN A', '1', '2','
         ('thicthichieu@gmail.com', 'fleta_rutherford10', 'fleta_rutherford38', '4', '3', '2011-11-09');
         
 INSERT INTO `Group`(GroupName,CreatorID,CreateDate)
-VALUES ('A', '10', '2020-11-09'),
-		('B', '1', '2002-11-09'),
-        ('C', '2', '2003-11-09'),
-        ('D', '3', '2019-12-19'),
-        ('E', '4', '2005-11-21'),
-        ('F', '5', '2006-11-09'),
-        ('G', '6', '2007-11-09'),
-        ('H', '7', '2008-11-09'),
-        ('I', '8', '2009-11-09'),
-        ('K', '9', '2010-11-09');
+VALUES ('Anpha', '10', '2020-11-09'),
+		('Badsdsa', '1', '2002-11-09'),
+        ('Ccanhsas', '2', '2003-11-09'),
+        ('Ddsads', '3', '2019-12-19'),
+        ('Edsadsa', '4', '2005-11-21'),
+        ('Fdsadsa', '5', '2006-11-09'),
+        ('Gdsadas', '6', '2007-11-09'),
+        ('Hdsd', '7', '2008-11-09'),
+        ('Ifdsafds', '8', '2009-11-09'),
+        ('Kfsdafds', '9', '2010-11-09');
 
 INSERT INTO `GroupAccount`(GroupID,AccountID,JoinDate)
 VALUES ('2', '1', '2001-11-09'),
@@ -178,16 +180,16 @@ INSERT INTO `CategoryQuestion`(CategoryName)VALUES ('Dien thoai'),
         ('Li oa');
 
 INSERT INTO `Question`(Content,CategoryID,TypeID,CreatorID,CreateDate)
-VALUES ('câu hỏiSDSFDFDSF', '1','1','1', '2001-11-09'),
-		('FDSFDSAFDSA', '2','1','3', '2002-11-09'),
-        ('câu hỏi FADSFDSF', '3','1','4', '2003-11-09'),
-        ('FDSAFDGFD', '1','1','5', '2004-11-09'),
-        ('FDAGFVCXVC', '3','1','4', '2005-11-09'),
-        ('GFDSGFDS', '4','1','3', '2006-11-09'),
-        ('GFDSGVSAFDAS', '2','3','2', '2007-11-09'),
-        ('HGFJHGFJFG', '1','3','4', '2008-11-09'),
-        ('HETHSGF', '3','4','1', '2009-11-09'),
-        ('HGDFHGJHFJU', '1','1','5', '2010-11-09');
+VALUES ('câu hỏiSDSFDFDSF', '1','1','1', '2022-10-09'),
+		('FDSFDSAFDSA', '2','1','3', '2022-10-09'),
+        ('câu hỏi FADSFDSF', '3','1','4', '2022-10-09'),
+        ('FDSAFDGFD', '1','1','5', '2022-10-09'),
+        ('FDAGFVCXVC', '3','1','4', '2022-10-09'),
+        ('GFDSGFDS', '4','1','3', '2022-10-09'),
+        ('GFDSGVSAFDAS', '2','3','2', '2022-10-09'),
+        ('HGFJHGFJFG', '1','3','4', '2022-11-09'),
+        ('HETHSGF', '3','4','1', '2022-11-09'),
+        ('HGDFHGJHFJU', '1','1','5', '2022-11-09');
 	
 INSERT INTO `Answer`(Content,QuestionID,isCorrect)
 VALUES ('SDSFDFDSF','1', '1'),
@@ -202,16 +204,16 @@ VALUES ('SDSFDFDSF','1', '1'),
         ('HGDFHGJHFJU','5', '1');
 
 INSERT INTO `Exam`(Code,Title,CategoryID,CreatorID,CreateDate,Duration)
-VALUES ('123','SDSFDFDSF', '1','1', '2001-11-09','5'),
-		('456','FDSFDSAFDSA', '2','3', '2002-11-09','10'),
-        ('567','FADSFDSF', '3','4', '2003-11-09','15'),
-        ('678','FDSAFDGFD', '1','5', '2004-11-09','25'),
-        ('789','FDAGFVCXVC', '3','4', '2005-11-09','35'),
-        ('910','GFDSGFDS', '4','3', '2006-11-09','45'),
-        ('783','GFDSGVSAFDAS','3','2', '2007-11-09','55'),
-        ('323','HGFJHGFJFG', '1','4', '2008-11-09','65'),
-        ('432','HETHSGF', '3','1', '2009-11-09','75'),
-        ('454','HGDFHGJHFJU', '1','5', '2010-11-09','85');
+VALUES ('123','SDSFDFDSF', '1','1', '2022-11-09','5'),
+		('456','FDSFDSAFDSA', '2','3', '2022-11-09','10'),
+        ('567','FADSFDSF', '3','4', '2022-11-09','15'),
+        ('678','FDSAFDGFD', '1','5', '2022-11-09','25'),
+        ('789','FDAGFVCXVC', '3','4', '2022-11-09','35'),
+        ('910','GFDSGFDS', '4','3', '2022-11-09','45'),
+        ('783','GFDSGVSAFDAS','3','2', '2022-11-09','55'),
+        ('323','HGFJHGFJFG', '1','4', '2022-11-09','65'),
+        ('432','HETHSGF', '3','1', '2022-11-09','75'),
+        ('454','HGDFHGJHFJU', '1','5', '2022-11-09','85');
 
 INSERT INTO `ExamQuestion`(ExamID,QuestionID)
 VALUES ('1', '1'),
@@ -225,3 +227,14 @@ VALUES ('1', '1'),
         ('1', '5'),
         ('5', '1');
 
+DROP PROCEDURE IF EXISTS UPDATE_D;
+DELIMITER $$
+CREATE PROCEDURE UPDATE_D(IN var_DNAME VARCHAR(30))
+BEGIN
+	DECLARE D_ID INT ;
+	SELECT D1.DepartmentID INTO D_ID FROM `Department` D1 WHERE D1.DepartmentName= var_DNAME;
+	UPDATE `Account` A SET A.DepartmentID = 11 WHERE A.DepartmentID = D_ID;
+	DELETE FROM `Department` D WHERE D.DepartmentID = D_ID;
+END$$
+DELIMITER ;
+Call UPDATE_D('SALE');

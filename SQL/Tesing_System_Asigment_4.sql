@@ -62,7 +62,10 @@ SELECT  `Position`.PositionID,`Position`.PositionName,COUNT(`Account`.PositionID
     ORDER BY COUNT(`Account`.PositionID) LIMIT 1 ;
 
 -- Câu 11
-
+SELECT D.DepartmentID,D.DepartmentName, P.PositionName, count(P.PositionName) FROM `account` A
+INNER JOIN department D ON A.DepartmentID = D.DepartmentID
+INNER JOIN position P ON A.PositionID = P.PositionID
+GROUP BY D.DepartmentID, P.PositionID;
 -- Câu 12
  SELECT Q.QuestionID,Q.Content,CQ.CategoryName,A.FullName,TQ.TypeName,AN.Content
 	FROM `Question` Q
