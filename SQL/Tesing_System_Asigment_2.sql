@@ -17,6 +17,7 @@ CREATE TABLE `Position` (
 
 DROP TABLE IF EXISTS `Account`;
 CREATE TABLE `Account`(
+	Gender VARCHAR(50),
 	AccountID INT PRIMARY KEY AUTO_INCREMENT,
     Email VARCHAR(100) NOT NULL UNIQUE KEY,
     Username VARCHAR(50) NOT NULL UNIQUE KEY,
@@ -122,7 +123,7 @@ VALUES ('Dev'),
 
 INSERT INTO `Account`(Email,Username,FullName,DepartmentID,PositionID,CreateDate)
 VALUES ('tavanmanh@gmail.com', 'fleta_rutherford1', 'NGYỄN VĂN A', '1', '2','2001-11-09'),
-		('hoangvanson@gmail.com', 'fleta_rutherford2', ' NGUYỄN VĂN fleta_ru43therford38', '1', '1', '2002-11-09'),
+		('admin@gmail.com', 'fleta_rutherford2', ' NGUYỄN VĂN fleta_ru43therford38', '1', '1', '2002-11-09'),
         ('laiducminj@gmail.com', 'fleta_rutherford3', 'fleta_r4utherford38', '2', '1', '2003-11-09'),
         ('phanhaoinam@gmail.com', 'fleta_rutherford4', 'fleta444_rutherford38', '3', '2', '2004-11-09'),
         ('dangthuha@gmail.com', 'fleta_rutherford5', 'fleta_ruth4322erford38', '1', '2', '2005-11-09'),
@@ -226,34 +227,3 @@ VALUES ('1', '1'),
         ('4', '2'),
         ('1', '5'),
         ('5', '1');
-
-DROP PROCEDURE IF EXISTS sp_CountQuesBefore6Month;
-DELIMITER $$
-CREATE PROCEDURE sp_CountQuesBefore6Month()
-	BEGIN
-		WITH CTE_Talbe_6MonthBefore AS (
-		SELECT MONTH(DATE_SUB(NOW(), INTERVAL 5 MONTH)) AS MONTH
-        UNION
-		SELECT MONTH(DATE_SUB(NOW(), INTERVAL 4 MONTH)) AS MONTH
-		UNION
-		SELECT MONTH(DATE_SUB(NOW(), INTERVAL 3 MONTH)) AS MONTH
-		UNION
-		SELECT MONTH(DATE_SUB(NOW(), INTERVAL 2 MONTH)) AS MONTH
-		UNION
-		SELECT MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AS MONTH
-		UNION
-		SELECT MONTH(NOW()) AS MONTH
-)
-SELECT M.MONTH, CASE
-WHEN COUNT(QuestionID) = 0 THEN 'không có câu hỏi nào trong tháng'
-ELSE COUNT(QuestionID)
-END AS SL
-FROM CTE_Talbe_6MonthBefore M
-LEFT JOIN `Question` Q ON MONTH(Q.CreateDate)=M.MONTH AND YEAR(Q.CreateDate) = YEAR(now())
-GROUP BY M.MONTH
-ORDER BY M.MONTH ASC;
-
-END$$
-DELIMITER ;
--- Run:
-CALL sp_CountQuesBefore6Month;
