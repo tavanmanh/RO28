@@ -98,6 +98,24 @@ END$$
  INSERT INTO `Account`(Email,Username,FullName,PositionID,CreateDate)
 VALUES ('1','1', '1', '1','2001-11-09');
 
+ -- CÂU 7
+ DROP TRIGGER IF EXISTS TRIG_MAX_QA;
+DELIMITER $$
+CREATE TRIGGER TRIG_MAX_QA
+BEFORE INSERT ON `Answer`
+FOR EACH ROW
+BEGIN
+	DECLARE COUNT_Q TINYINT;
+	DECLARE COUNT_A TINYINT;
+	SELECT count(A.QuestionID) INTO COUNT_Q FROM `Answer` A WHERE A.QuestionID = NEW.QuestionID;
+	SELECT count(1) INTO COUNT_A FROM `Answer` A WHERE A.QuestionID = NEW.QuestionID AND A.isCorrect = NEW.isCorrect;
+	IF (COUNT_Q > 4 ) OR (COUNT_A >2) THEN
+	SIGNAL SQLSTATE '12345'
+	SET MESSAGE_TEXT = 'NHẬP SAI DỮ LIỆU';
+	END IF;
+END $$
+DELIMITER ;
+
  -- CÂU 8
 DELIMITER $$
 CREATE TRIGGER TRIG_GENDER
@@ -137,18 +155,44 @@ DELETE FROM exam E WHERE E.ExamID =1;
  -- CÂU 10
 DROP TRIGGER IF EXISTS TRIG_DL;
 DELIMITER $$
-CREATE TRIGGER TRIG_DL
-BEFORE DELETE ON `Question`
-FOR EACH ROW
-	BEGIN
-		DECLARE ID_Q TINYINT;
-		SELECT COUNT(EX.QuestionID) INTO ID_Q FROM `ExamQuestion` EX WHERE EX.QuestionID = OLD.QuestionID;
-		IF (ID_Q =0) THEN
-		SIGNAL SQLSTATE '12345'
-		SET MESSAGE_TEXT = 'KHÔNG THỂ XÓA';
-		END IF ;
-END $$
-DELIMITER ;
- DELETE FROM `Question` Q WHERE QuestionID = 877;
+ CREATE TRIGGER TRIG_DL
+ BEFORE DELETE ON `Question`
+ FOR EACH ROW
+BEGIN
+	DECLARE ID_Q INT;
+    SELECT count(E.QuestionID) INTO ID_Q FROM `ExamQuestion` E WHERE E.QuestionID = OLD.QuestionID;
+	IF (ID_Q = 0) THEN
+    SIGNAL SQLSTATE '12345'
+	SET MESSAGE_TEXT = 'K TỒN TẠI Q NÀY';
+	END IF;
+END$$
+ DELIMITER ;
+ DELETE FROM `Question` Q  WHERE Q.QuestionID = 877;
+ -- CÂU 12
+SELECT E.*, CASE
+	WHEN E.Duration <= 30 THEN 'Short time'
+	WHEN E.Duration <= 60 THEN 'Medium time'
+	ELSE 'Longtime'
+	END AS Duration
+FROM `Exam` E;
 
-SELECT COUNT(EX.QuestionID) FROM `ExamQuestion` EX WHERE EX.QuestionID =876;
+ -- CÂU 13
+ 
+ SELECT GA.GroupID, COUNT(GA.GroupID), CASE
+	WHEN COUNT(GA.GroupID) <= 5 THEN 'few'
+	WHEN COUNT(GA.GroupID) <= 20 THEN 'normal'
+	ELSE 'higher'
+	END AS the_number_user_amount
+	FROM groupaccount GA
+	GROUP BY GA.GroupID;
+   
+ -- CÂU 14
+SELECT D.DepartmentName, CASE
+		WHEN COUNT(A.DepartmentID) = 0 THEN 'Không có User'
+		ELSE COUNT(A.DepartmentID)
+		END AS SL_USER
+	FROM department D
+	LEFT JOIN account A ON D.DepartmentID = A.DepartmentID
+	GROUP BY D.DepartmentID;
+    
+    

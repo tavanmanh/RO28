@@ -89,7 +89,7 @@ CREATE TABLE `Exam`(
     CategoryID INT NOT NULL,
     CreatorID INT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
-    Duration INT NOT NULL,
+    Duration VARCHAR(50) NOT NULL,
     FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID)
 ); 
 
@@ -227,3 +227,6 @@ VALUES ('1', '1'),
         ('4', '2'),
         ('1', '5'),
         ('5', '1');
+        
+
+
