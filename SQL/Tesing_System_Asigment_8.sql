@@ -1,0 +1,131 @@
+DROP DATABASE IF EXISTS EX_1;
+CREATE DATABASE EX_1;
+USE EX_1;
+
+DROP TABLE IF EXISTS `CUSTOMER`;
+CREATE TABLE `CUSTOMER`(
+	CustomerID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    Email VARCHAR(100) NOT NULL UNIQUE KEY,
+    Name VARCHAR(50) NOT NULL,
+    Phone VARCHAR(50) NOT NULL,
+	Address VARCHAR(250) NOT NULL,
+    Note VARCHAR(250) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS `CAR`;
+CREATE TABLE `CAR` (
+	CarID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	Maker ENUM('HONDA', 'TOYOTA','NISSAN') NOT NULL,
+    Model VARCHAR(50) NOT NULL,
+    Year DATETIME DEFAULT NOW(),
+    Color VARCHAR(50) NOT NULL,
+    Note VARCHAR(250) NOT NULL 
+);
+
+DROP TABLE IF EXISTS `CAR_ORDER`;
+CREATE TABLE `CAR_ORDER` (
+	OrderID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT UNSIGNED  NOT NULL,
+    CarID INT UNSIGNED  NOT NULL,
+	Amount INT DEFAULT 1 ,
+    SalePrice INT NOT NULL,
+    OrderDate DATETIME DEFAULT NOW(),
+    DeliveryDate DATETIME DEFAULT NOW(),
+    DeliveryAddress VARCHAR(250) NOT NULL,
+    Staus ENUM('0', '1','2') DEFAULT '0',
+	Note VARCHAR(250) NOT NULL,
+	FOREIGN KEY (CustomerID) REFERENCES `CUSTOMER`(CustomerID) ON DELETE CASCADE,
+	FOREIGN KEY (CarID) REFERENCES `CAR`(CarID) ON DELETE CASCADE
+);
+
+INSERT INTO `CUSTOMER`(Email,Name,Phone,Address,Note)
+VALUES ('tavanmanh@gmail.com', 'tavanmanh', '12345678', 'HN','2001-11-09'),
+		('admin@gmail.com', 'admin', '4536543654', 'HP', '2002-11-09'),
+        ('laiducminj@gmail.com', 'laiducminj', '432432432', 'QN', '2003-11-09'),
+        ('phanhaoinam@gmail.com', 'phanhaoinam', '44321432421', 'TN', '2004-11-09'),
+        ('dangthuha@gmail.com', 'dangthuha', '413243241', 'VP', '2005-11-09');
+	
+INSERT INTO `CAR`(Maker,Model,Color,Note,Year)
+VALUES ('HONDA', 'tavanmanh', 'ĐỎ', 'HN','2001-11-09'),
+		('TOYOTA', 'admin', 'XANH', 'HP', '2002-11-09'),
+        ('HONDA', 'laiducminj', 'VÀNG', 'QN', '2003-11-09'),
+        ('NISSAN', 'phanhaoinam', 'CAM', 'TN', '2004-11-09'),
+        ('HONDA', 'dangthuha', 'TÍM', 'VP', '2005-11-09');
+        
+INSERT INTO `CAR_ORDER`(CustomerID,CarID,Amount,SalePrice,OrderDate,DeliveryDate,DeliveryAddress,Staus,Note)
+VALUES ('1', '1', '1', '1111111','2022-11-09','2022-11-09', 'HN','0','XXXXX'),
+		('5', '3', '2', '222222', '2022-11-09','2022-11-09', 'QN','1','EEEEE'),
+        ('2', '4', '4', '333333', '2022-11-09','2022-11-09', 'DN','0','EFFFF'),
+        ('3', '2', '4', '444444', '2022-11-09','2022-11-09', 'TB','2','FFFF'),
+        ('1', '2', '4', '55555', '2022-11-09','2022-11-09', 'HY','1','LLLLLL');
+-- CÂU 2
+SELECT CU.name,sum(O.Amount) AS SL_OTO 
+FROM `CUSTOMER` CU JOIN `CAR_ORDER` O ON CU.CustomerID=O.CustomerID 
+GROUP BY CU.CustomerID
+ORDER BY SL_OTO;
+-- CÂU 3
+DROP FUNCTION IF EXISTS FC_Maker;
+DELIMITER $$
+ CREATE FUNCTION FC_Maker() 
+ RETURNS VARCHAR(50)
+ DETERMINISTIC
+    BEGIN
+		DECLARE T_MAKER VARCHAR(50);
+		WITH CTE_DEP2 AS (
+		SELECT 	C.Maker,SUM(O.Amount) AS 'SL' FROM `CAR` C
+		JOIN 	`CAR_ORDER` O
+		ON			O.CarID = C.CarID
+        WHERE YEAR(O.DeliveryDate)=YEAR(CURRENT_DATE()) AND O.Staus ='1'
+		GROUP BY 	C.Maker
+		)
+        SELECT Maker into T_MAKER FROM CTE_DEP2 WHERE SL=(SELECT MAX(SL) FROM CTE_DEP2);
+	RETURN T_MAKER;
+    END $$
+DELIMITER ;
+SELECT FC_Maker();
+
+-- CÂU 4
+DROP PROCEDURE IF EXISTS DELETE_HUY ;
+DELIMITER $$  
+CREATE PROCEDURE DELETE_HUY(OUT SL int)
+BEGIN
+	SELECT COUNT(Staus) AS SL FROM `CAR_ORDER` WHERE Staus='2';
+    DELETE FROM `CAR_ORDER` WHERE Staus=2;
+END; $$
+DELIMITER ;
+SET @SL=0;
+CALL DELETE_HUY(@SL);
+
+-- CÂU 5
+DROP PROCEDURE IF EXISTS SELECT_CU;
+DELIMITER $$
+CREATE PROCEDURE SELECT_CU(IN ID_CU VARCHAR(30))
+BEGIN
+	SELECT CU.name ,CO.OrderID,CO.Amount,C.Maker FROM `CAR_ORDER` CO 
+    JOIN `CUSTOMER` CU ON CU.CustomerID=CO.CustomerID 
+    JOIN `CAR` C ON C.CarID=CO.CarID 
+    WHERE CO.CustomerID =ID_CU AND CO.Staus=1;
+END$$
+DELIMITER ;
+Call SELECT_CU(1);
+
+
+-- CÂU 6
+DROP TRIGGER IF EXISTS TRIG_INSERT_ORDER;
+DELIMITER $$
+ CREATE TRIGGER TRIG_INSERT_ORDER
+ BEFORE INSERT ON `CAR_ORDER`
+ FOR EACH ROW
+BEGIN
+	DECLARE V_DATE DATETIME;
+	SET V_DATE = DATE_SUB(NEW.OrderDate, interval 15 DAY);
+	IF (V_DATE < NEW.DeliveryDate) THEN
+	SIGNAL SQLSTATE '12345'
+	SET MESSAGE_TEXT = 'NHẬP SAI THÔNG TIN';
+	END IF;
+END$$
+ DELIMITER ;
+ INSERT INTO `CAR_ORDER`(CustomerID,CarID,Amount,SalePrice,OrderDate,DeliveryDate,DeliveryAddress,Staus,Note)
+VALUES ('1', '1', '1', '1111111','2001-11-09','2001-11-10', 'HN','0','XXXXX');
+
