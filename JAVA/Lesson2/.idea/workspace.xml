@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80c21aa4-9747-4d27-a638-ce04f676fc94" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lesson2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vti/Exercise2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vti/Exercise3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vti/Exercise4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vti/Exercise5.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vti/Exercise6.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Account.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Answer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/CategoryQuestion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Department.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Exam.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Group.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Lesson1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Position$PositionName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Position.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/Question.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lesson1/out/production/Lesson1/vti/TypeQuestion.class" beforeDir="false" />
-    </list>
+    <list default="true" id="80c21aa4-9747-4d27-a638-ce04f676fc94" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
