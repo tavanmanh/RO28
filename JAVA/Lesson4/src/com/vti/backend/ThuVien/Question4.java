@@ -96,7 +96,7 @@ public class Question4 {
         System.out.println("Nhập vào mã tài liệu muốn xóa ");
         int xoa = sc.nextInt();
         for (int i = 0; i < listTaiLieu.size(); i++) {
-            if(listTaiLieu.get(i)==xoa){
+            if(listTaiLieu.get(i).id == xoa){
                 listTaiLieu.remove(i);
             }
         }
