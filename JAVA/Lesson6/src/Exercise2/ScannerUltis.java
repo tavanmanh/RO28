@@ -1,25 +1,34 @@
 package Exercise2;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class ScannerUltis {
     private static Scanner sc = new Scanner(System.in);
-    //Question 7
-    public static int[] inputInt() {
+    public static int inputInt() {
         while (true) {
             try {
-                int[] arr = new int[2];
-                System.out.println("Nhập vào id:");
-                arr[0] = sc.nextInt();
-                System.out.println("Nhập vào tuổi:");
-                arr[1] = sc.nextInt();
-                return arr;
+                return Integer.parseInt(sc.next().trim());
             } catch (Exception e) {
-                System.err.println("Không đúng định dạng nhập lại");
+                System.err.println("Nhập lại:");
             }
         }
     }
-    //Question 8
+    public static int inputIntPositive() {
+        while (true) {
+            try {
+                int intPositive = Integer.parseInt(sc.next());
+                if (intPositive >= 0) {
+                    return intPositive;
+                } else {
+                    System.err.println("Nhập lại:");
+                }
+            } catch (Exception e) {
+                System.err.println("Nhập lại:");
+            }
+        }
+    }
     public static Float inputFloat(String mes) {
         while (true) {
             try {
@@ -50,8 +59,19 @@ public class ScannerUltis {
         }
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(ScannerUltis.inputString());
+    public static LocalDate inputLocalDate() {
+        System.out.println("Nhập theo định dạng yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        while (true) {
+            String localdate = sc.next().trim();
+            try {
+                if (format.parse(localdate) != null) {
+                    LocalDate lc = LocalDate.parse(localdate);
+                    return lc;
+                }
+            } catch (Exception e) {
+                System.err.println("Nhập lại:");
+            }
+        }
     }
 }
