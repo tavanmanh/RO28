@@ -25,9 +25,9 @@ public class Exercise1 {
         System.out.println("Số sinh viên muốn thêm");
         while (true) {
             try {
-                int Sl = sc.nextInt();
-                if (Sl < 7 && Sl > 0) {
-                    for (int i = 0; i < Sl; i++) {
+                int sl = Integer.parseInt(sc.next());
+                if (sl < 7 && sl > 0) {
+                    for (int i = 0; i < sl; i++) {
                         Student st = new Student();
                         arrStudent.add(st);
                     }
@@ -39,7 +39,6 @@ public class Exercise1 {
                 }
             } catch (Exception e) {
                 System.err.println("Nhập lại:");
-                continue;
             }
         }
         //Question 2
