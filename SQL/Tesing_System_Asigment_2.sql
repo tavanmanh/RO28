@@ -12,7 +12,7 @@ CREATE TABLE `Department` (
 DROP TABLE IF EXISTS `Position`;
 CREATE TABLE `Position` (
 	PositionID TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	PositionName ENUM('Dev', 'Test','Scrum Master', 'PM') NOT NULL UNIQUE KEY
+	PositionName ENUM('Dev', 'Test','Scrum Master', 'PM') blog
 );
 
 DROP TABLE IF EXISTS `Account`;
@@ -35,7 +35,7 @@ CREATE TABLE `Group`(
     GroupName VARCHAR(100) NOT NULL UNIQUE KEY,
     CreatorID INT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
-    FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID)
+    FOREIGN KEY (CreatorID) REFERENCES `Account`(AccountID) ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `GroupAccount`;
@@ -43,8 +43,8 @@ CREATE TABLE `GroupAccount`(
 	GroupID INT NOT NULL,
     AccountID INT NOT NULL UNIQUE KEY,
     JoinDate DATETIME DEFAULT NOW(), 
-	FOREIGN KEY (GroupID) REFERENCES `Group`(GroupID),
-    FOREIGN KEY(AccountID) REFERENCES `Account`(AccountID)
+	FOREIGN KEY (GroupID) REFERENCES `Group`(GroupID)  ON DELETE CASCADE,
+    FOREIGN KEY(AccountID) REFERENCES `Account`(AccountID)  ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `TypeQuestion`;
@@ -78,7 +78,7 @@ CREATE TABLE `Answer`(
     Content VARCHAR(500) NOT NULL,
     QuestionID INT NOT NULL,
     isCorrect BOOLEAN,
-    FOREIGN KEY (QuestionID) REFERENCES `Question`(QuestionID)
+    FOREIGN KEY (QuestionID) REFERENCES `Question`(QuestionID) ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `Exam`;
@@ -90,15 +90,15 @@ CREATE TABLE `Exam`(
     CreatorID INT NOT NULL,
     CreateDate DATETIME DEFAULT NOW(),
     Duration VARCHAR(50) NOT NULL,
-    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID)
+    FOREIGN KEY (CategoryID) REFERENCES `CategoryQuestion`(CategoryID) ON DELETE CASCADE
 ); 
 
 DROP TABLE IF EXISTS `ExamQuestion`;
 CREATE TABLE `ExamQuestion`(
 	ExamID INT NOT NULL,
     QuestionID INT NOT NULL,
-    FOREIGN KEY (QuestionID) REFERENCES `Question`(QuestionID),
-    FOREIGN KEY (ExamID) REFERENCES `Exam`(ExamID)
+    FOREIGN KEY (QuestionID) REFERENCES `Question`(QuestionID) ON DELETE CASCADE,
+    FOREIGN KEY (ExamID) REFERENCES `Exam`(ExamID) ON DELETE CASCADE
 ); 
 
 

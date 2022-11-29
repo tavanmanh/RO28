@@ -12,7 +12,7 @@ CREATE TABLE `Department` (
 DROP TABLE IF EXISTS `Position`;
 CREATE TABLE `Position` (
 	PositionID TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	PositionName ENUM('Dev', 'Test',' Scrum Master', 'PM') NOT NULL UNIQUE KEY
+	PositionName VARCHAR(30) NOT NULL
 );
 
 DROP TABLE IF EXISTS `Account`;
